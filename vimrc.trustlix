@@ -21,6 +21,7 @@ Plug 'git@github.com:tpope/vim-haml.git'
 Plug 'git@github.com:tpope/vim-markdown.git'
 Plug 'git@github.com:tpope/vim-ragtag.git'
 Plug 'git@github.com:tpope/vim-rails.git'
+Plug 'git@github.com:trustlix/vim-color-trustlix.git'
 Plug 'git@github.com:vim-pandoc/vim-pandoc.git'
 Plug 'git@github.com:vim-scripts/taglist.vim.git'
 call plug#end() " Initialize plugin system

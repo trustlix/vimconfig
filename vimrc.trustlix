@@ -1,0 +1,232 @@
+"""""
+" Vim-Plug config
+"
+"""""
+call plug#begin('~/.vim/plugged')
+Plug 'git@github.com:Shougo/neomru.vim.git'
+Plug 'git@github.com:Shougo/unite.vim.git'
+Plug 'git@github.com:Shougo/vimproc.vim.git', { 'do': 'make' }
+Plug 'git@github.com:klen/python-mode.git'
+Plug 'git@github.com:lepture/vim-jinja.git'
+Plug 'git@github.com:saltstack/salt-vim.git'
+Plug 'git@github.com:scrooloose/nerdtree.git', {'on': 'NERDTreeToggle'}
+Plug 'git@github.com:scrooloose/syntastic.git'
+Plug 'git@github.com:terryma/vim-multiple-cursors.git'
+Plug 'git@github.com:tpope/vim-commentary.git'
+Plug 'git@github.com:tpope/vim-endwise.git'
+Plug 'git@github.com:tpope/vim-fugitive.git'
+Plug 'git@github.com:tpope/vim-git.git'
+Plug 'git@github.com:tpope/vim-haml.git'
+Plug 'git@github.com:tpope/vim-markdown.git'
+Plug 'git@github.com:tpope/vim-ragtag.git'
+Plug 'git@github.com:tpope/vim-rails.git'
+Plug 'git@github.com:vim-pandoc/vim-pandoc.git'
+Plug 'git@github.com:vim-scripts/taglist.vim.git'
+call plug#end() " Initialize plugin system
+
+filetype plugin indent on
+syntax on
+
+"Enable modeline
+set modeline
+
+"Use Vim settings, rather then Vi settings (much better!).
+"This must be first, because it changes other options as a side effect.
+set nocompatible
+
+"allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+"store lots of :cmdline history
+set history=1000
+
+set showcmd     "show incomplete cmds down the bottom
+set showmode    "show current mode down the bottom
+
+set incsearch   "find the next match as we type the search
+set hlsearch    "hilight searches by default
+
+set number      "add line numbers
+set wrap 
+set linebreak 
+set nolist
+set showbreak=...
+set tw=0
+set wrapmargin=0
+set formatoptions-=o "dont continue comments when pushing o/O
+set colorcolumn=80
+
+"add some line space for easy reading
+set linespace=4
+
+"disable visual bell
+set visualbell t_vb=
+
+"turn off needless toolbar on gvim/mvim
+set guioptions-=T
+
+"indent settings
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set autoindent
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=3       "deepest fold is 3 levels
+set nofoldenable        "dont fold by default
+
+"vertical/horizontal scroll off settings
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
+
+"make <c-l> clear the highlight as well as redraw
+nnoremap <C-L> :nohls<CR><C-L>
+inoremap <C-L> <C-O>:nohls<CR>
+
+"make Y consistent with C and D
+nnoremap Y y$
+
+"mark syntax errors with :signs
+let g:syntastic_enable_signs=1
+
+"key mapping for saving file
+imap <C-s> <ESC>:w!<CR><ESC>a
+nmap <C-S> :w<CR>
+
+"key mapping for tab navigation
+nmap <Tab> gt
+nmap <S-Tab> gT
+
+setl spell spelllang=en
+set spell
+map <F5> :setlocal spell!<CR>
+
+set ruler
+set wildmenu
+set smarttab
+set lbr
+set suffixes+=.info,.aux,.log,.dvi,.bbl,.out,.~,.swp
+
+"some stuff to get the mouse going in term
+if has("nvim") == 0
+  set ttymouse=xterm2
+endif
+set mouse=a
+
+"hide buffers when not displayed
+set hidden
+
+if has("gui_running")
+    "tell the term has 256 colors
+    set t_Co=256
+    colorscheme shiny-white
+    set guitablabel=%M%t
+    set lines=40
+    set columns=115
+
+    if has("gui_gnome")
+        set term=gnome-256color
+        colorscheme shiny-white
+        set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
+    endif
+else
+    if has("nvim") == 0
+      set term=xterm-256color
+    endif
+    colorscheme trustlix
+endif
+
+"""""
+" Unite
+" Like ctrlp.vim settings
+"
+"""""
+call unite#custom#profile('default', 'context', {
+\   'keep_focus': 1,
+\   'no_quit': 1,
+\   'start_insert': 1,
+\   'winheight': 10,
+\   'direction': 'botright',
+\ })
+
+" Using ack as recursive command.
+let g:unite_source_rec_async_command = ['ack-grep', '-f', '--nofilter']
+let g:unite_source_grep_command = 'ack-grep'
+let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+let g:unite_source_grep_recursive_opt = ''
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#source('file_rec/async','sorters','sorter_rank')
+
+nnoremap <silent> <C-p> :<C-u>Unite -buffer-name=files file_rec/async:!<CR>
+nnoremap <silent> <C-f> :<C-u>Unite grep:.<CR>
+nnoremap <silent> <C-b> :<C-u>Unite -quick-match buffer<CR>
+
+"""""
+" NerdTree
+"
+"""""
+map! <C-d> <ESC>:NERDTreeToggle<CR>
+map <C-d> :NERDTreeToggle<CR>
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+"bindings for ragtag
+inoremap <M-o>       <Esc>o
+inoremap <C-j>       <Down>
+let g:ragtag_global_maps = 1
+
+"""""
+"Headers for new files
+"
+"""""
+"------- PYTHON -------
+:autocmd BufNewFile *.py 0r ~/.vim/style/skeleton.py
+:autocmd BufNewFile *.py   ks|call LastMod()|'s
+:fun LastMod()
+:  if line("$") > 20
+:    let l = 20
+:  else
+:    let l = line("$")
+:  endif
+:  exe "1," . l . "g/Created: /s/Created: .*/Created: " . strftime("%Y %b %d")
+:endfun
+
+"""""
+" Statusline
+"
+"""""
+set statusline=[%f]       "tail of the filename
+set statusline+=%{fugitive#statusline()}
+set statusline+=%{exists('g:loaded_rvm')?rvm#statusline():''}
+
+"display a warning if fileformat isnt unix
+set statusline+=%#warningmsg#
+set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+set statusline+=%*
+
+"Display a warning if file encoding isnt utf-8
+set statusline+=%#warningmsg#
+set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+set statusline+=%*
+
+set statusline+=%h      "help file flag
+set statusline+=%y      "filetype
+set statusline+=%r      "read only flag
+set statusline+=%m      "modified flag
+
+"display a warning if &paste is set
+set statusline+=%#error#
+set statusline+=%{&paste?'[paste]':''}
+set statusline+=%*
+
+set statusline+=%=      "left/right separator
+
+"set statusline+=%{StatuslineCurrentHighlight()}\ \ "current highlight
+
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+set laststatus=2

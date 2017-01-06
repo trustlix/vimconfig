@@ -3,6 +3,7 @@
 "
 """""
 call plug#begin('~/.vim/plugged')
+Plug 'git@github.com:docker/docker.git' , { 'rtp': '/contrib/syntax/vim/' }
 Plug 'git@github.com:Shougo/neomru.vim.git'
 Plug 'git@github.com:Shougo/unite.vim.git'
 Plug 'git@github.com:Shougo/vimproc.vim.git', { 'do': 'make' }

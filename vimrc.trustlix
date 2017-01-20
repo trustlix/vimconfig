@@ -9,6 +9,7 @@ Plug 'git@github.com:Shougo/unite.vim.git'
 Plug 'git@github.com:Shougo/vimproc.vim.git', { 'do': 'make' }
 Plug 'git@github.com:klen/python-mode.git'
 Plug 'git@github.com:lepture/vim-jinja.git'
+Plug 'git@github.com:pangloss/vim-javascript.git'
 Plug 'git@github.com:rhysd/vim-color-shiny-white.git'
 Plug 'git@github.com:saltstack/salt-vim.git'
 Plug 'git@github.com:scrooloose/nerdtree.git', {'on': 'NERDTreeToggle'}
@@ -140,6 +141,14 @@ else
     endif
     colorscheme trustlix
 endif
+
+"""""
+" Javascript configs
+"
+"""""
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
 
 """""
 " Unite

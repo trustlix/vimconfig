@@ -4,6 +4,7 @@
 """""
 call plug#begin('~/.vim/plugged')
 Plug 'git@github.com:docker/docker.git' , { 'rtp': '/contrib/syntax/vim/' }
+Plug 'git@github.com:hashivim/vim-vagrant.git'
 Plug 'git@github.com:klen/python-mode.git'
 Plug 'git@github.com:jistr/vim-nerdtree-tabs.git'
 Plug 'git@github.com:lepture/vim-jinja.git'

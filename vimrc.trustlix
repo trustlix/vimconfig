@@ -4,16 +4,17 @@
 """""
 call plug#begin('~/.vim/plugged')
 Plug 'git@github.com:docker/docker.git' , { 'rtp': '/contrib/syntax/vim/' }
-Plug 'git@github.com:Shougo/neomru.vim.git'
-Plug 'git@github.com:Shougo/unite.vim.git'
-Plug 'git@github.com:Shougo/vimproc.vim.git', { 'do': 'make' }
 Plug 'git@github.com:klen/python-mode.git'
+Plug 'git@github.com:jistr/vim-nerdtree-tabs.git'
 Plug 'git@github.com:lepture/vim-jinja.git'
 Plug 'git@github.com:pangloss/vim-javascript.git'
 Plug 'git@github.com:rhysd/vim-color-shiny-white.git'
 Plug 'git@github.com:saltstack/salt-vim.git'
-Plug 'git@github.com:scrooloose/nerdtree.git', {'on': 'NERDTreeToggle'}
+Plug 'git@github.com:scrooloose/nerdtree.git'
 Plug 'git@github.com:scrooloose/syntastic.git'
+Plug 'git@github.com:Shougo/neomru.vim.git'
+Plug 'git@github.com:Shougo/unite.vim.git'
+Plug 'git@github.com:Shougo/vimproc.vim.git', { 'do': 'make' }
 Plug 'git@github.com:terryma/vim-multiple-cursors.git'
 Plug 'git@github.com:tpope/vim-commentary.git'
 Plug 'git@github.com:tpope/vim-endwise.git'
@@ -178,14 +179,17 @@ nnoremap <silent> <C-f> :<C-u>Unite grep:.<CR>
 nnoremap <silent> <C-b> :<C-u>Unite -quick-match buffer<CR>
 
 """""
-" NerdTree
+" NerdTreeTabs
 "
 """""
-map! <C-d> <ESC>:NERDTreeToggle<CR>
-map <C-d> :NERDTreeToggle<CR>
+map  <C-d> <plug>NERDTreeTabsToggle<CR>
+map! <C-d> <ESC><plug>NERDTreeTabsToggle<CR>
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-"bindings for ragtag
+"""""
+" bindings for ragtag
+"
+"""""
 inoremap <M-o>       <Esc>o
 inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1

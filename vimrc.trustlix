@@ -26,6 +26,8 @@ Plug 'git@github.com:tpope/vim-markdown.git'
 Plug 'git@github.com:tpope/vim-ragtag.git'
 Plug 'git@github.com:tpope/vim-rails.git'
 Plug 'git@github.com:trustlix/vim-color-trustlix.git'
+Plug 'git@github.com:vim-airline/vim-airline.git'
+Plug 'git@github.com:vim-airline/vim-airline-themes.git'
 Plug 'git@github.com:vim-scripts/taglist.vim.git'
 Plug 'git@github.com:vim-scripts/groovy.vim.git'
 call plug#end() " Initialize plugin system
@@ -53,8 +55,8 @@ set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 
 set number      "add line numbers
-set wrap 
-set linebreak 
+set wrap
+set linebreak
 set nolist
 set showbreak=...
 set tw=0
@@ -145,6 +147,18 @@ else
 endif
 
 """""
+" Highlight extra whitespaces
+"
+"""""
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+
+"""""
 " Javascript configs
 "
 """""
@@ -219,38 +233,13 @@ au BufReadPost Jenkinsfile set filetype=groovy
 :endfun
 
 """""
-" Statusline
+" Statusline (airline)
 "
 """""
-set statusline=[%f]       "tail of the filename
-set statusline+=%{fugitive#statusline()}
-set statusline+=%{exists('g:loaded_rvm')?rvm#statusline():''}
 
-"display a warning if fileformat isnt unix
-set statusline+=%#warningmsg#
-set statusline+=%{&ff!='unix'?'['.&ff.']':''}
-set statusline+=%*
-
-"Display a warning if file encoding isnt utf-8
-set statusline+=%#warningmsg#
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
-set statusline+=%*
-
-set statusline+=%h      "help file flag
-set statusline+=%y      "filetype
-set statusline+=%r      "read only flag
-set statusline+=%m      "modified flag
-
-"display a warning if &paste is set
-set statusline+=%#error#
-set statusline+=%{&paste?'[paste]':''}
-set statusline+=%*
-
-set statusline+=%=      "left/right separator
-
-"set statusline+=%{StatuslineCurrentHighlight()}\ \ "current highlight
-
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
 set laststatus=2
+let g:airline_theme='distinguished'

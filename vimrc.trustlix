@@ -27,6 +27,7 @@ Plug 'git@github.com:tpope/vim-ragtag.git'
 Plug 'git@github.com:tpope/vim-rails.git'
 Plug 'git@github.com:trustlix/vim-color-trustlix.git'
 Plug 'git@github.com:vim-scripts/taglist.vim.git'
+Plug 'git@github.com:vim-scripts/groovy.vim.git'
 call plug#end() " Initialize plugin system
 
 filetype plugin indent on
@@ -193,6 +194,13 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 inoremap <M-o>       <Esc>o
 inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1
+
+"""""
+" Groovy/Jenkinsfile
+"
+"""""
+au BufReadPost Jenkinsfile set syntax=groovy
+au BufReadPost Jenkinsfile set filetype=groovy
 
 """""
 "Headers for new files

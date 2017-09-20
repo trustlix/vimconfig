@@ -216,8 +216,8 @@ let g:ragtag_global_maps = 1
 " Groovy/Jenkinsfile
 "
 """""
-au BufReadPost Jenkinsfile set syntax=groovy
-au BufReadPost Jenkinsfile set filetype=groovy
+au BufRead,BufNewFile Jenkinsfile set syntax=groovy
+au BufRead,BufNewFile Jenkinsfile set filetype=groovy
 
 """""
 "Headers for new files
